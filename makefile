@@ -9,13 +9,15 @@ copy:
 	cp -r $(files) $(tmp)
 	rm -rf $(tmp)yii-1.1.4.r2429/framework/gii
 	rm -rf $(tmp)protected/yiic*
+	rm -rf $(tmp)protected/tests
+	chmod 750 $(tmp)protected
 	
 unittests:
-	phpunit --bootstrap protected/tests/bootstrap.php protected/tests/unit
+	phpunit --configuration protected/tests/phpunit.xml protected/tests/unit
 	
 functionaltests:
 	sh tools/ensureSeleniumRCRunning.sh
-	phpunit --bootstrap protected/tests/bootstrap.php protected/tests/functional
+	(cd protected/tests; phpunit functional)
 	
 version: copy
 	tar -pvczf Feedback.tar.gz $(tmp)
