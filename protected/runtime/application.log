@@ -1,0 +1,67 @@
+2010/10/24 15:38:33 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "user".' in /var/www/feedback/yii-1.1.4.r2429/framework/web/CWebApplication.php:328
+Stack trace:
+#0 /var/www/feedback/yii-1.1.4.r2429/framework/web/CWebApplication.php(121): CWebApplication->runController('user')
+#1 /var/www/feedback/yii-1.1.4.r2429/framework/base/CApplication.php(135): CWebApplication->processRequest()
+#2 /var/www/feedback/index.php(11): CApplication->run()
+#3 {main} REQUEST_URI=/feedback/index.php?r=user
+2010/10/24 15:39:53 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "gii".' in /var/www/feedback/yii-1.1.4.r2429/framework/web/CWebApplication.php:328
+Stack trace:
+#0 /var/www/feedback/yii-1.1.4.r2429/framework/web/CWebApplication.php(121): CWebApplication->runController('gii')
+#1 /var/www/feedback/yii-1.1.4.r2429/framework/base/CApplication.php(135): CWebApplication->processRequest()
+#2 /var/www/feedback/index.php(11): CApplication->run()
+#3 {main} REQUEST_URI=/feedback/index.php?r=gii
+2010/10/24 16:24:17 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "gee".' in /var/www/feedback/yii-1.1.4.r2429/framework/web/CWebApplication.php:328
+Stack trace:
+#0 /var/www/feedback/yii-1.1.4.r2429/framework/web/CWebApplication.php(121): CWebApplication->runController('gee')
+#1 /var/www/feedback/yii-1.1.4.r2429/framework/base/CApplication.php(135): CWebApplication->processRequest()
+#2 /var/www/feedback/index.php(11): CApplication->run()
+#3 {main} REQUEST_URI=/feedback/?r=gee
+2010/10/24 16:27:53 [error] [system.db.CDbCommand] Error in querying SQL: SHOW COLUMNS FROM `SurveyType`
+2010/10/24 17:00:38 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "gii".' in /var/www/feedback/yii-1.1.4.r2429/framework/web/CWebApplication.php:328
+Stack trace:
+#0 /var/www/feedback/yii-1.1.4.r2429/framework/web/CWebApplication.php(121): CWebApplication->runController('gii')
+#1 /var/www/feedback/yii-1.1.4.r2429/framework/base/CApplication.php(135): CWebApplication->processRequest()
+#2 /var/www/feedback/index.php(11): CApplication->run()
+#3 {main} REQUEST_URI=/feedback/index.php?r=gii
+2010/10/24 18:02:27 [error] [php] Undefined variable: model (/var/www/feedback/protected/views/site/login.php:21)
+Stack trace:
+#0 /var/www/feedback/yii-1.1.4.r2429/framework/web/CController.php(798): SiteController->renderFile()
+#1 /var/www/feedback/yii-1.1.4.r2429/framework/web/CController.php(739): SiteController->renderPartial()
+#2 /var/www/feedback/protected/controllers/SiteController.php(34): SiteController->render()
+#3 /var/www/feedback/yii-1.1.4.r2429/framework/web/actions/CInlineAction.php(50): SiteController->actionIndex()
+#4 /var/www/feedback/yii-1.1.4.r2429/framework/web/CController.php(300): CInlineAction->run()
+#5 /var/www/feedback/yii-1.1.4.r2429/framework/web/CController.php(278): SiteController->runAction()
+#6 /var/www/feedback/yii-1.1.4.r2429/framework/web/CController.php(257): SiteController->runActionWithFilters()
+#7 /var/www/feedback/yii-1.1.4.r2429/framework/web/CWebApplication.php(324): SiteController->run()
+#8 /var/www/feedback/yii-1.1.4.r2429/framework/web/CWebApplication.php(121): CWebApplication->runController()
+#9 /var/www/feedback/yii-1.1.4.r2429/framework/base/CApplication.php(135): CWebApplication->processRequest()
+#10 /var/www/feedback/index-test.php(11): CWebApplication->run()
+REQUEST_URI=/feedback/index-test.php/
+2010/10/24 18:02:43 [error] [php] Undefined variable: model (/var/www/feedback/protected/views/site/login.php:21)
+Stack trace:
+#0 /var/www/feedback/yii-1.1.4.r2429/framework/web/CController.php(798): SiteController->renderFile()
+#1 /var/www/feedback/yii-1.1.4.r2429/framework/web/CController.php(739): SiteController->renderPartial()
+#2 /var/www/feedback/protected/controllers/SiteController.php(34): SiteController->render()
+#3 /var/www/feedback/yii-1.1.4.r2429/framework/web/actions/CInlineAction.php(50): SiteController->actionIndex()
+#4 /var/www/feedback/yii-1.1.4.r2429/framework/web/CController.php(300): CInlineAction->run()
+#5 /var/www/feedback/yii-1.1.4.r2429/framework/web/CController.php(278): SiteController->runAction()
+#6 /var/www/feedback/yii-1.1.4.r2429/framework/web/CController.php(257): SiteController->runActionWithFilters()
+#7 /var/www/feedback/yii-1.1.4.r2429/framework/web/CWebApplication.php(324): SiteController->run()
+#8 /var/www/feedback/yii-1.1.4.r2429/framework/web/CWebApplication.php(121): CWebApplication->runController()
+#9 /var/www/feedback/yii-1.1.4.r2429/framework/base/CApplication.php(135): CWebApplication->processRequest()
+#10 /var/www/feedback/index-test.php(11): CWebApplication->run()
+REQUEST_URI=/feedback/index-test.php/
+2010/10/24 18:03:04 [error] [php] Undefined variable: model (/var/www/feedback/protected/views/site/login.php:21)
+Stack trace:
+#0 /var/www/feedback/yii-1.1.4.r2429/framework/web/CController.php(798): SiteController->renderFile()
+#1 /var/www/feedback/yii-1.1.4.r2429/framework/web/CController.php(739): SiteController->renderPartial()
+#2 /var/www/feedback/protected/controllers/SiteController.php(34): SiteController->render()
+#3 /var/www/feedback/yii-1.1.4.r2429/framework/web/actions/CInlineAction.php(50): SiteController->actionIndex()
+#4 /var/www/feedback/yii-1.1.4.r2429/framework/web/CController.php(300): CInlineAction->run()
+#5 /var/www/feedback/yii-1.1.4.r2429/framework/web/CController.php(278): SiteController->runAction()
+#6 /var/www/feedback/yii-1.1.4.r2429/framework/web/CController.php(257): SiteController->runActionWithFilters()
+#7 /var/www/feedback/yii-1.1.4.r2429/framework/web/CWebApplication.php(324): SiteController->run()
+#8 /var/www/feedback/yii-1.1.4.r2429/framework/web/CWebApplication.php(121): CWebApplication->runController()
+#9 /var/www/feedback/yii-1.1.4.r2429/framework/base/CApplication.php(135): CWebApplication->processRequest()
+#10 /var/www/feedback/index.php(11): CWebApplication->run()
+REQUEST_URI=/feedback/index.php
