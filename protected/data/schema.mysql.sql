@@ -1,51 +1,185 @@
-CREATE TABLE user (
-    id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    username VARCHAR(128) NOT NULL,
-    password VARCHAR(128) NOT NULL,
-    email VARCHAR(128) NOT NULL
-)ENGINE=INNODB;
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
 
-CREATE TABLE surveytype (
-	id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	title VARCHAR(128) NOT NULL
-)ENGINE=INNODB;
+CREATE SCHEMA IF NOT EXISTS `feedback` DEFAULT CHARACTER SET utf8 ;
+USE `feedback` ;
 
-CREATE TABLE survey (
-	id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	title VARCHAR(128) NOT NULL
-)ENGINE=INNODB;
+-- -----------------------------------------------------
+-- Table `feedback`.`user`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `feedback`.`user` ;
 
-CREATE TABLE topic (
-	id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	surveytype INTEGER NOT NULL,
-	title VARCHAR(128) NOT NULL,
+CREATE  TABLE IF NOT EXISTS `feedback`.`user` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `login` VARCHAR(128) NOT NULL ,
+  `password` VARCHAR(45) NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `login_UNIQUE` (`login` ASC) )
+ENGINE = InnoDB;
 
-	FOREIGN KEY (surveytype) REFERENCES surveytype(id)
-		ON DELETE RESTRICT
-)ENGINE=INNODB;
 
-CREATE TABLE survey_topic (
-	id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	survey INTEGER NOT NULL,
-	topic INTEGER NOT NULL,
-	
-	FOREIGN KEY (survey) REFERENCES survey(id)
-		ON DELETE RESTRICT,
-	FOREIGN KEY (topic) REFERENCES topic(id)
-		ON DELETE RESTRICT
-)ENGINE=INNODB;
+-- -----------------------------------------------------
+-- Table `feedback`.`team`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `feedback`.`team` ;
 
-CREATE TABLE opinion (
-	id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	user INTEGER NOT NULL,
-	topic INTEGER NOT NULL,
-	survey INTEGER NOT NULL,
-	text VARCHAR(1000) NOT NULL,
+CREATE  TABLE IF NOT EXISTS `feedback`.`team` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `title` VARCHAR(128) NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `title_UNIQUE` (`title` ASC) )
+ENGINE = InnoDB;
 
-	FOREIGN KEY (user) REFERENCES user(id)
-		ON DELETE RESTRICT,
-	FOREIGN KEY (topic) REFERENCES topic(id)
-		ON DELETE RESTRICT,
-	FOREIGN KEY (survey) REFERENCES survey(id)
-		ON DELETE RESTRICT
-)ENGINE=INNODB;
+
+-- -----------------------------------------------------
+-- Table `feedback`.`membership`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `feedback`.`membership` ;
+
+CREATE  TABLE IF NOT EXISTS `feedback`.`membership` (
+  `user` INT NOT NULL ,
+  `team` INT NOT NULL ,
+  PRIMARY KEY (`user`, `team`) ,
+  INDEX `fk_membership_team` (`team` ASC) ,
+  INDEX `fk_membership_user` (`user` ASC) ,
+  CONSTRAINT `fk_membership_user`
+    FOREIGN KEY (`user` )
+    REFERENCES `feedback`.`user` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_membership_team`
+    FOREIGN KEY (`team` )
+    REFERENCES `feedback`.`team` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `feedback`.`surveytype`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `feedback`.`surveytype` ;
+
+CREATE  TABLE IF NOT EXISTS `feedback`.`surveytype` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `title` VARCHAR(128) NOT NULL ,
+  `defaultDaysToAnswer` INT NULL ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `title_UNIQUE` (`title` ASC) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `feedback`.`topic`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `feedback`.`topic` ;
+
+CREATE  TABLE IF NOT EXISTS `feedback`.`topic` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `surveytype` INT NOT NULL ,
+  `title` VARCHAR(128) NULL ,
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_topic_surveytype` (`surveytype` ASC) ,
+  CONSTRAINT `fk_topic_surveytype`
+    FOREIGN KEY (`surveytype` )
+    REFERENCES `feedback`.`surveytype` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `feedback`.`survey`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `feedback`.`survey` ;
+
+CREATE  TABLE IF NOT EXISTS `feedback`.`survey` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `title` VARCHAR(128) NULL ,
+  `deadline` DATE NULL ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `feedback`.`covering`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `feedback`.`covering` ;
+
+CREATE  TABLE IF NOT EXISTS `feedback`.`covering` (
+  `survey` INT NOT NULL ,
+  `topic` INT NOT NULL ,
+  PRIMARY KEY (`survey`, `topic`) ,
+  INDEX `fk_covering_topic` (`topic` ASC) ,
+  INDEX `fk_covering_survey` (`survey` ASC) ,
+  CONSTRAINT `fk_survey_has_topic_survey1`
+    FOREIGN KEY (`survey` )
+    REFERENCES `feedback`.`survey` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_survey_has_topic_topic1`
+    FOREIGN KEY (`topic` )
+    REFERENCES `feedback`.`topic` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `feedback`.`opinion`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `feedback`.`opinion` ;
+
+CREATE  TABLE IF NOT EXISTS `feedback`.`opinion` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `user` INT NOT NULL ,
+  `topic` INT NOT NULL ,
+  `text` VARCHAR(500) NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_opinion_user` (`user` ASC) ,
+  INDEX `fk_opinion_topic` (`topic` ASC) ,
+  CONSTRAINT `fk_opinion_user`
+    FOREIGN KEY (`user` )
+    REFERENCES `feedback`.`user` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_opinion_topic`
+    FOREIGN KEY (`topic` )
+    REFERENCES `feedback`.`topic` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+-- -----------------------------------------------------
+-- Data for table `feedback`.`user`
+-- -----------------------------------------------------
+SET AUTOCOMMIT=0;
+USE `feedback`;
+INSERT INTO `feedback`.`user` (`id`, `login`, `password`) VALUES ('1', 'admin', '21232f297a57a5a743894a0e4a801fc3');
+
+COMMIT;
+
+-- -----------------------------------------------------
+-- Data for table `feedback`.`team`
+-- -----------------------------------------------------
+SET AUTOCOMMIT=0;
+USE `feedback`;
+INSERT INTO `feedback`.`team` (`id`, `title`) VALUES ('1', '20er');
+
+COMMIT;
+
+-- -----------------------------------------------------
+-- Data for table `feedback`.`surveytype`
+-- -----------------------------------------------------
+SET AUTOCOMMIT=0;
+USE `feedback`;
+INSERT INTO `feedback`.`surveytype` (`id`, `title`, `defaultDaysToAnswer`) VALUES ('1', '20er Gottesdienst', NULL);
+
+COMMIT;

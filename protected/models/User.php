@@ -5,11 +5,11 @@
  *
  * The followings are the available columns in table 'user':
  * @property integer $id
- * @property string $username
+ * @property string $login
  * @property string $password
- * @property string $email
  *
  * The followings are the available model relations:
+ * @property Team[] $teams
  * @property Opinion[] $opinions
  */
 class User extends CActiveRecord
@@ -31,6 +31,11 @@ class User extends CActiveRecord
 		return 'user';
 	}
 
+        public function  setAttribute($name, $value) {
+            if($name === 'password' && $value != null) return parent::setAttribute($name, md5($value));
+            return parent::setAttribute($name, $value);
+        }
+
 	/**
 	 * @return array validation rules for model attributes.
 	 */
@@ -39,11 +44,12 @@ class User extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('username, password, email', 'required'),
-			array('username, password, email', 'length', 'max'=>128),
+			array('login, password', 'required'),
+			array('login', 'length', 'max'=>128),
+			array('password', 'length', 'max'=>45),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, username, password, email', 'safe', 'on'=>'search'),
+			array('login', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -55,6 +61,7 @@ class User extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'teams' => array(self::MANY_MANY, 'Team', 'membership(user, team)'),
 			'opinions' => array(self::HAS_MANY, 'Opinion', 'user'),
 		);
 	}
@@ -66,9 +73,8 @@ class User extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'username' => 'Username',
-			'password' => 'Password',
-			'email' => 'Email',
+			'login' => 'Benutzer',
+			'password' => 'Passwort',
 		);
 	}
 
@@ -83,13 +89,11 @@ class User extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
-		$criteria->compare('username',$this->username,true);
-		$criteria->compare('password',$this->password,true);
-		$criteria->compare('email',$this->email,true);
+		$criteria->compare('login',$this->login,true);
 
 		return new CActiveDataProvider(get_class($this), array(
 			'criteria'=>$criteria,
 		));
 	}
+
 }

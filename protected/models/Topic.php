@@ -9,8 +9,8 @@
  * @property string $title
  *
  * The followings are the available model relations:
+ * @property Survey[] $surveys
  * @property Opinion[] $opinions
- * @property SurveyTopic[] $surveyTopics
  * @property Surveytype $surveytype0
  */
 class Topic extends CActiveRecord
@@ -40,8 +40,8 @@ class Topic extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('surveytype, title', 'required'),
-			array('surveytype', 'numerical', 'integerOnly'=>true),
+			array('id, surveytype', 'required'),
+			array('id, surveytype', 'numerical', 'integerOnly'=>true),
 			array('title', 'length', 'max'=>128),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
@@ -57,8 +57,8 @@ class Topic extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'surveys' => array(self::MANY_MANY, 'Survey', 'covering(topic, survey)'),
 			'opinions' => array(self::HAS_MANY, 'Opinion', 'topic'),
-			'surveyTopics' => array(self::HAS_MANY, 'SurveyTopic', 'topic'),
 			'surveytype0' => array(self::BELONGS_TO, 'Surveytype', 'surveytype'),
 		);
 	}

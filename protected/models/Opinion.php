@@ -7,13 +7,11 @@
  * @property integer $id
  * @property integer $user
  * @property integer $topic
- * @property integer $survey
  * @property string $text
  *
  * The followings are the available model relations:
- * @property User $user0
  * @property Topic $topic0
- * @property Survey $survey0
+ * @property User $user0
  */
 class Opinion extends CActiveRecord
 {
@@ -42,12 +40,12 @@ class Opinion extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('user, topic, survey, text', 'required'),
-			array('user, topic, survey', 'numerical', 'integerOnly'=>true),
-			array('text', 'length', 'max'=>1000),
+			array('id, user, topic, text', 'required'),
+			array('id, user, topic', 'numerical', 'integerOnly'=>true),
+			array('text', 'length', 'max'=>500),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, user, topic, survey, text', 'safe', 'on'=>'search'),
+			array('id, user, topic, text', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -59,9 +57,8 @@ class Opinion extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'user0' => array(self::BELONGS_TO, 'User', 'user'),
 			'topic0' => array(self::BELONGS_TO, 'Topic', 'topic'),
-			'survey0' => array(self::BELONGS_TO, 'Survey', 'survey'),
+			'user0' => array(self::BELONGS_TO, 'User', 'user'),
 		);
 	}
 
@@ -74,7 +71,6 @@ class Opinion extends CActiveRecord
 			'id' => 'ID',
 			'user' => 'User',
 			'topic' => 'Topic',
-			'survey' => 'Survey',
 			'text' => 'Text',
 		);
 	}
@@ -93,7 +89,6 @@ class Opinion extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('user',$this->user);
 		$criteria->compare('topic',$this->topic);
-		$criteria->compare('survey',$this->survey);
 		$criteria->compare('text',$this->text,true);
 
 		return new CActiveDataProvider(get_class($this), array(

@@ -1,21 +1,21 @@
 <?php
 
 /**
- * This is the model class for table "survey".
+ * This is the model class for table "surveytype".
  *
- * The followings are the available columns in table 'survey':
+ * The followings are the available columns in table 'surveytype':
  * @property integer $id
  * @property string $title
- * @property string $deadline
+ * @property integer $defaultDaysToAnswer
  *
  * The followings are the available model relations:
  * @property Topic[] $topics
  */
-class Survey extends CActiveRecord
+class Surveytype extends CActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
-	 * @return Survey the static model class
+	 * @return Surveytype the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -27,7 +27,7 @@ class Survey extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'survey';
+		return 'surveytype';
 	}
 
 	/**
@@ -38,11 +38,12 @@ class Survey extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
+			array('id, title', 'required'),
+			array('id, defaultDaysToAnswer', 'numerical', 'integerOnly'=>true),
 			array('title', 'length', 'max'=>128),
-			array('deadline', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, title, deadline', 'safe', 'on'=>'search'),
+			array('id, title, defaultDaysToAnswer', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -54,7 +55,7 @@ class Survey extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'topics' => array(self::MANY_MANY, 'Topic', 'covering(survey, topic)'),
+			'topics' => array(self::HAS_MANY, 'Topic', 'surveytype'),
 		);
 	}
 
@@ -66,7 +67,7 @@ class Survey extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'title' => 'Title',
-			'deadline' => 'Deadline',
+			'defaultDaysToAnswer' => 'Default Days To Answer',
 		);
 	}
 
@@ -83,7 +84,7 @@ class Survey extends CActiveRecord
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('title',$this->title,true);
-		$criteria->compare('deadline',$this->deadline,true);
+		$criteria->compare('defaultDaysToAnswer',$this->defaultDaysToAnswer);
 
 		return new CActiveDataProvider(get_class($this), array(
 			'criteria'=>$criteria,

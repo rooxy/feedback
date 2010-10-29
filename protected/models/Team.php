@@ -1,20 +1,20 @@
 <?php
 
 /**
- * This is the model class for table "surveytype".
+ * This is the model class for table "team".
  *
- * The followings are the available columns in table 'surveytype':
+ * The followings are the available columns in table 'team':
  * @property integer $id
  * @property string $title
  *
  * The followings are the available model relations:
- * @property Topic[] $topics
+ * @property User[] $users
  */
-class SurveyType extends CActiveRecord
+class Team extends CActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
-	 * @return SurveyType the static model class
+	 * @return Team the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -26,7 +26,7 @@ class SurveyType extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'surveytype';
+		return 'team';
 	}
 
 	/**
@@ -37,7 +37,8 @@ class SurveyType extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('title', 'required'),
+			array('id, title', 'required'),
+			array('id', 'numerical', 'integerOnly'=>true),
 			array('title', 'length', 'max'=>128),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
@@ -53,7 +54,7 @@ class SurveyType extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'topics' => array(self::HAS_MANY, 'Topic', 'surveytype'),
+			'users' => array(self::MANY_MANY, 'User', 'membership(team, user)'),
 		);
 	}
 

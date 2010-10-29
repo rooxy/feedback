@@ -1,21 +1,19 @@
 <?php
 
 /**
- * This is the model class for table "survey".
+ * This is the model class for table "membership".
  *
- * The followings are the available columns in table 'survey':
- * @property integer $id
- * @property string $title
- * @property string $deadline
+ * The followings are the available columns in table 'membership':
+ * @property integer $user
+ * @property integer $team
  *
  * The followings are the available model relations:
- * @property Topic[] $topics
  */
-class Survey extends CActiveRecord
+class Membership extends CActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
-	 * @return Survey the static model class
+	 * @return Membership the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -27,7 +25,7 @@ class Survey extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'survey';
+		return 'membership';
 	}
 
 	/**
@@ -38,11 +36,11 @@ class Survey extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('title', 'length', 'max'=>128),
-			array('deadline', 'safe'),
+			array('user, team', 'required'),
+			array('user, team', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, title, deadline', 'safe', 'on'=>'search'),
+			array('user, team', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -54,7 +52,6 @@ class Survey extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'topics' => array(self::MANY_MANY, 'Topic', 'covering(survey, topic)'),
 		);
 	}
 
@@ -64,9 +61,8 @@ class Survey extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
-			'title' => 'Title',
-			'deadline' => 'Deadline',
+			'user' => 'User',
+			'team' => 'Team',
 		);
 	}
 
@@ -81,9 +77,8 @@ class Survey extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
-		$criteria->compare('title',$this->title,true);
-		$criteria->compare('deadline',$this->deadline,true);
+		$criteria->compare('user',$this->user);
+		$criteria->compare('team',$this->team);
 
 		return new CActiveDataProvider(get_class($this), array(
 			'criteria'=>$criteria,

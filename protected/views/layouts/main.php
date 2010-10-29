@@ -37,10 +37,6 @@
 		)); ?>
 	</div><!-- mainmenu -->
 
-	<?php $this->widget('zii.widgets.CBreadcrumbs', array(
-		'links'=>$this->breadcrumbs,
-	)); ?><!-- breadcrumbs -->
-
 	<?php echo $content; ?>
 
 	<div id="footer">
