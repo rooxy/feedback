@@ -80,7 +80,7 @@ class User extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'login' => 'Benutzer',
+			'login' => 'Name',
 			'plain_password' => 'Passwort',
             'conf_password' => 'Passwort bestätigen'
 		);

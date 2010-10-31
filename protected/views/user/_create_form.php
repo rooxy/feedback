@@ -5,8 +5,6 @@
 	'enableAjaxValidation'=>false,
 )); ?>
 
-	<p class="note">Felder mit <span class="required">*</span> sind zwingend.</p>
-
 	<?php echo $form->errorSummary($model); ?>
 
 	<div class="row">
@@ -27,6 +25,24 @@
 		<?php echo $form->error($model,'conf_password'); ?>
 	</div>
 
+    <h1>Teams</h1>
+
+    <?php $this->widget('zii.widgets.grid.CGridView', array(
+        'id'=>'team-grid',
+        'summaryText'=>'',
+        'dataProvider'=>Team::model()->search(),
+        'selectableRows'=>2,
+        'columns'=>array(
+            array(
+                'name'=>'title',
+                'header'=>'Team'
+            ),
+            array(
+                'class'=>'CCheckBoxColumn',
+                'header'=>'ist Mitglied',
+            ),
+        ),
+    )); ?>
 
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Erstellen' : 'Speichern'); ?>

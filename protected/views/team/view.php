@@ -37,7 +37,7 @@ $this->menu=array(
 <?php 
     $dataProvider=new CArrayDataProvider($model->members);
 
-     $this->widget('zii.widgets.grid.CGridView', array(
+    $this->widget('zii.widgets.grid.CGridView', array(
         'id'=>'user-grid',
         'dataProvider'=>$dataProvider,
         'columns'=>array(

@@ -57,6 +57,12 @@ class UserController extends Controller
 		if(isset($_POST['User']))
 		{
 			$model->attributes=$_POST['User'];
+
+            foreach($_POST['team-grid_c1'] as $teamId)
+            {
+                // TODO: Handle selected Teams correctly
+            }
+
 			if($model->save())
 				$this->redirect(array('index'));
 		}

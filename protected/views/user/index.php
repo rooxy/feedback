@@ -12,6 +12,7 @@ $this->menu=array(
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'user-grid',
+    'summaryText'=>'',
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
 	'columns'=>array(
