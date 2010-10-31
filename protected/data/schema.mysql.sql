@@ -156,30 +156,3 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
--- -----------------------------------------------------
--- Data for table `feedback`.`user`
--- -----------------------------------------------------
-SET AUTOCOMMIT=0;
-USE `feedback`;
-INSERT INTO `feedback`.`user` (`id`, `login`, `password`) VALUES ('1', 'admin', '21232f297a57a5a743894a0e4a801fc3');
-
-COMMIT;
-
--- -----------------------------------------------------
--- Data for table `feedback`.`team`
--- -----------------------------------------------------
-SET AUTOCOMMIT=0;
-USE `feedback`;
-INSERT INTO `feedback`.`team` (`id`, `title`) VALUES ('1', '20er');
-
-COMMIT;
-
--- -----------------------------------------------------
--- Data for table `feedback`.`surveytype`
--- -----------------------------------------------------
-SET AUTOCOMMIT=0;
-USE `feedback`;
-INSERT INTO `feedback`.`surveytype` (`id`, `title`, `defaultDaysToAnswer`) VALUES ('1', '20er Gottesdienst', NULL);
-
-COMMIT;

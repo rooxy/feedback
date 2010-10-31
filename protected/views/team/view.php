@@ -5,20 +5,47 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List Team', 'url'=>array('index')),
-	array('label'=>'Create Team', 'url'=>array('create')),
-	array('label'=>'Update Team', 'url'=>array('update', 'id'=>$model->id)),
-	array('label'=>'Delete Team', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
-	array('label'=>'Manage Team', 'url'=>array('admin')),
+	array('label'=>'Löschen', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>$model->title.' wirklich löschen?')),
 );
 ?>
 
-<h1>View Team #<?php echo $model->id; ?></h1>
+<h1><?php echo $model->title; ?></h1>
 
-<?php $this->widget('zii.widgets.CDetailView', array(
-	'data'=>$model,
-	'attributes'=>array(
-		'id',
-		'title',
-	),
+<div class="form">
+
+<?php $form=$this->beginWidget('CActiveForm', array(
+	'id'=>'team-form',
+	'enableAjaxValidation'=>false,
+)); ?>
+
+	<?php echo $form->errorSummary($model); ?>
+
+	<div class="row">
+		<?php echo $form->labelEx($model,'Name'); ?>
+		<?php echo $form->textField($model,'title',array('size'=>60,'maxlength'=>128)); ?>
+		<?php echo $form->error($model,'title'); ?>
+	</div>
+
+	<div class="row buttons">
+		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
+	</div>
+
+<?php $this->endWidget(); ?>
+
+</div><!-- form -->
+
+<?php 
+    $dataProvider=new CArrayDataProvider($model->members);
+
+     $this->widget('zii.widgets.grid.CGridView', array(
+        'id'=>'user-grid',
+        'dataProvider'=>$dataProvider,
+        'columns'=>array(
+            'login',
+            array(
+                'class'=>'CLinkColumn',
+                'labelExpression'=>'"entfernen"',
+                'urlExpression'=>'Yii::app()->controller->createUrl("removeMember",array("userId"=>$data->primaryKey,"memberId"=>"'.$model->id.'"))',
+            ),
+        ),
 )); ?>

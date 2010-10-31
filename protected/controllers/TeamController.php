@@ -51,7 +51,7 @@ class TeamController extends Controller
 	public function actionView($id)
 	{
 		$this->render('view',array(
-			'model'=>$this->loadModel($id),
+			'model'=>Team::model()->findByPk($id)->with('members'),
 		));
 	}
 
@@ -127,9 +127,13 @@ class TeamController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Team');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
+		$model=new Team('search');
+		$model->unsetAttributes();  // clear any default values
+		if(isset($_GET['Team']))
+			$model->attributes=$_GET['Team'];
+
+		$this->render('admin',array(
+			'model'=>$model,
 		));
 	}
 
