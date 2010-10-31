@@ -14,6 +14,9 @@
  */
 class User extends CActiveRecord
 {
+    public $conf_password;
+    public $plain_password;
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return User the static model class
@@ -31,10 +34,12 @@ class User extends CActiveRecord
 		return 'user';
 	}
 
-        public function  setAttribute($name, $value) {
-            if($name === 'password' && $value != null) return parent::setAttribute($name, md5($value));
-            return parent::setAttribute($name, $value);
-        }
+
+    public function beforeSave() {
+        if (!empty($this->plain_password))
+            $this->password=md5($this->plain_password);
+        return true;
+    }
 
 	/**
 	 * @return array validation rules for model attributes.
@@ -44,9 +49,11 @@ class User extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('login, password', 'required'),
+			array('login, plain_password, conf_password', 'required'),
 			array('login', 'length', 'max'=>128),
-			array('password', 'length', 'max'=>45),
+			array('plain_password', 'length', 'max'=>45),
+            array('conf_password', 'length', 'max'=>40),
+            array('plain_password', 'compare', 'compareAttribute'=>'conf_password'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('login', 'safe', 'on'=>'search'),
@@ -74,7 +81,8 @@ class User extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'login' => 'Benutzer',
-			'password' => 'Passwort',
+			'plain_password' => 'Passwort',
+            'conf_password' => 'Passwort bestätigen'
 		);
 	}
 

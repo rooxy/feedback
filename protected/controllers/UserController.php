@@ -85,7 +85,6 @@ class UserController extends Controller
 				$this->redirect(array('index'));
 		}
 
-                $model->password = '';
 		$this->render('update',array(
 			'model'=>$model,
 		));

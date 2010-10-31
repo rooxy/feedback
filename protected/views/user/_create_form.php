@@ -16,10 +16,17 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'password'); ?>
-		<?php echo $form->passwordField($model,'password',array('size'=>45,'maxlength'=>45)); ?>
-		<?php echo $form->error($model,'password'); ?>
+		<?php echo $form->labelEx($model,'plain_password'); ?>
+		<?php echo $form->passwordField($model,'plain_password',array('size'=>45,'maxlength'=>45)); ?>
+		<?php echo $form->error($model,'plain_password'); ?>
 	</div>
+
+    <div class="row">
+		<?php echo $form->labelEx($model,'conf_password'); ?>
+		<?php echo $form->passwordField($model,'conf_password',array('size'=>45,'maxlength'=>45)); ?>
+		<?php echo $form->error($model,'conf_password'); ?>
+	</div>
+
 
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Erstellen' : 'Speichern'); ?>
